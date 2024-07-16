@@ -1,6 +1,6 @@
 import * as cheerio from "cheerio";
 import axios from "axios";
-import { Manga, MangaChapter, IMangaResult } from "../../../../types/manga";
+import { Manga, MangaChapter, IMangaResult, IMangaTop } from "../../../../types/manga";
 import { IResultSearch } from "../../../../types/search";
 
 //Default Set Axios Cookie
@@ -56,6 +56,40 @@ export class Comick {
         }
     }
 
+        async GetMangaByTop(comic_types?: string) {
+    try {
+        const { data } = await axios.get(`${this.api}/top`, {
+            params: {
+                comic_types: comic_types,
+            }
+        });
+        
+        const resultList: IResultSearch<IMangaTop> = {
+            results: data.rank.map((e: { slug: string, title: string, md_covers:[{ b2key: string } ] }) => {
+               const listMangaResult: IMangaTop = {
+                    
+                    id: e.slug,
+                    title: e.title,
+                   thumbnail: {
+                        url: "https://meo.comick.pictures/" + e.md_covers[0].b2key
+                    },
+                    url: `/manga/comick/title/${e.slug}`
+
+                };
+                
+
+                return listMangaResult;
+                
+            })
+            
+        };
+
+        return resultList;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
     async GetMangaInfo(manga: string, lang: string): Promise<Manga> {
         try {
             const { data } = await axios.get(`${this.api}/comic/${manga}`);
