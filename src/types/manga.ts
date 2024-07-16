@@ -231,3 +231,18 @@ export class MangaVolume implements IMangaVolume {
   /** @inheritdoc */
   url?:`/manga/${string}/volume/${string}`; // title or number
 }
+
+export interface IMangaTop{
+   id:  string;
+    /** @inheritdoc */
+   title: string;
+    /** @inheritdoc */
+   thumbnail?: IImage;
+    /** @inheritdoc */
+   url: `/manga/${string}/title/${string}`;
+
+
+
+  
+ }//filter
+
