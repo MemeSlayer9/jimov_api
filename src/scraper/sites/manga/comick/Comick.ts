@@ -22,7 +22,7 @@ axios.defaults.headers.common["User-Agent"] = "Mozilla/5.0 (Linux; Android 6.0.1
 
 export class Comick {
     readonly url = "https://comick.app";
-    readonly api = "https://api.comick.io"
+    readonly api = "https://api.comick.fun"
 
     async GetMangaByFilter(search?: string, type?: number, year?: string, genre?: string) {
         try {
